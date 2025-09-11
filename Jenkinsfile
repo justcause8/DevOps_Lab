@@ -21,7 +21,7 @@ pipeline {
                         changedFiles = ''
                     }
                     
-                    env.CHANGED_FILES = changedFiles
+                    env.CHANGED_FILES = changedFiles ?: ''
                     echo "Измененные файлы: ${env.CHANGED_FILES}"
                 }
             }
