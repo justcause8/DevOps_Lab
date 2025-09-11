@@ -29,12 +29,15 @@ function AnswersPage() {
                 // const response = await axios.get(`https://localhost:7109/questionnaire/access/${id}`, {
                 //     headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` },
                 // });
+                
                 const response = await axios.get(`http://localhost:5000/questionnaire/access/${id}`, {
                     headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` },
                 });
+
                 // const response = await axios.get(`https://5.129.207.189/questionnaire/access/${id}`, {
                 //     headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` },
                 // });
+
                 const { title, questions: fetchedQuestions, author: fetchedAuthor } = response.data;
                 if (!fetchedQuestions || !Array.isArray(fetchedQuestions)) {
                     console.error('Данные вопросов отсутствуют или имеют неверный формат:', response.data);
