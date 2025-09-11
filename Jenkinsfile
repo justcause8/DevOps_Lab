@@ -54,7 +54,7 @@ pipeline {
 
         stage('Deploy (CD)') {
             when {
-                branch 'master'
+                expression { env.GIT_BRANCH?.contains('master') }
             }
             steps {
                 script {
