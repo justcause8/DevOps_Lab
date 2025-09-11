@@ -5,11 +5,6 @@ pipeline {
         stage('Checkout') {
             steps {
                 checkout scm
-            }
-        }
-
-        stage('Detect Changes') {
-            steps {
                 script {
                     // Получаем список изменённых файлов между последним коммитом и предыдущим
                     def changes = bat(script: 'git diff --name-only HEAD~1 HEAD', returnStdout: true).trim()
