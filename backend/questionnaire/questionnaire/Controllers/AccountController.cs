@@ -24,7 +24,7 @@ namespace questionnaire.questionnaire.Controllers
             _tokenService = tokenService;
         }
 
-        // Эндпоинт для регистрация пользователя
+        // Регистрация пользователя
         [AllowAnonymous]
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] User model)
