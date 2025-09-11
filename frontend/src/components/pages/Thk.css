@@ -1,0 +1,173 @@
+
+.Thk-container {
+    /* flex: 1;  */
+
+    display: flex;
+    flex-direction: column;
+    min-height: 78.9vh;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    overflow: hidden;
+    
+}
+
+.survey-pageThk {
+    font-family: Arial, sans-serif;
+    padding: 40px 80px;
+    background: rgb(255, 255, 255);
+    max-width: 60%;
+    width: 100%;
+    margin: 20px auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.6s 0.2s ease-out forwards;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 35vh;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.text-thk {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 500;
+    font-size: 56px;
+    line-height: 1.3;
+    letter-spacing: 1px;
+    margin-bottom: 40px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.5s 0.5s ease-out forwards;
+}
+
+.ButtonThkContainer {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 20px;
+    width: 100%;
+    flex-wrap: wrap;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.5s 0.7s ease-out forwards;
+}
+
+.ButtonThk {
+    background: rgba(63, 101, 241, 1);
+    border-radius: 6px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.9);
+    width: 200px;
+    padding: 12px 20px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.ButtonThk:hover {
+    background-color: #304ebc;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.ButtonThk:active {
+    background-color: #243b9a;
+    transform: translateY(0);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 1024px) {
+    .Thk-container {
+        min-height: 81.2vh;
+    }
+    .survey-pageThk {
+        max-width: 75%;
+        padding: 35px 60px;
+    }
+    .text-thk {
+        font-size: 48px;
+    }
+    .ButtonThk {
+        font-size: 17px;
+        width: 180px;
+        padding: 11px 18px;
+    }
+    .ButtonThkContainer {
+        gap: 25px;
+    }
+}
+
+@media (max-width: 768px) {
+    .Thk-container {
+        min-height: 82.2vh;
+    }
+    .survey-pageThk {
+        max-width: 90%;
+        padding: 30px 40px;
+        min-height: 30vh;
+        margin: 40px auto;
+    }
+    .text-thk {
+        font-size: 40px;
+        margin-bottom: 30px;
+    }
+    .ButtonThkContainer {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        margin-top: 30px;
+    }
+    .ButtonThk {
+        font-size: 16px;
+        width: 80%;
+        max-width: 250px;
+        padding: 12px 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .Thk-container {
+        min-height: 81.2vh;
+        padding: 15px;
+    }
+    .survey-pageThk {
+        max-width: 95%;
+        padding: 25px 20px;
+        margin: 20px auto;
+        min-height: auto;
+    }
+    .text-thk {
+        font-size: 32px;
+        margin-bottom: 25px;
+    }
+    .ButtonThkContainer {
+        gap: 15px;
+        margin-top: 25px;
+    }
+    .ButtonThk {
+        font-size: 15px;
+        width: 90%;
+        padding: 10px 12px;
+    }
+}

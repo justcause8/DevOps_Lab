@@ -1,0 +1,366 @@
+.list-ancet{
+    min-height: 73.3vh;
+}
+.ac-page {
+    font-family: Arial, sans-serif;
+    padding: 60px 20px 20px;
+    background-color: #ffffff;
+    max-width: 60%;
+    margin: 60px auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
+}
+
+.loading-state {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+    font-size: 1.2em;
+    color: #555;
+}
+
+.Nick {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 35.55px;
+    letter-spacing: 0%;
+    padding: 20px 20px 0px;
+    display: flex; 
+    align-items: center; 
+    flex-wrap: wrap; 
+}
+
+.settingImg {
+    margin-left: 10px;
+    width: 30px; 
+    height: 30px;
+    transition: transform 0.3s ease;
+}
+
+.settingImg:hover {
+    transform: rotate(45deg); 
+}
+
+.type-qw {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 35.55px;
+    letter-spacing: 0%;
+    padding: 50px 20px 20px 20px;
+    
+}
+
+.Open-list {
+    display: grid;
+    margin-left: 20px;
+    margin-right: 20px; 
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.Open {
+    display: flex; 
+    flex-direction: column; 
+    justify-content: space-between;
+    outline: 2px solid #000;
+    width: 100%;
+    max-width: 310px;
+    height: auto;
+    min-height: 250px;
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+    position: relative;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    overflow: hidden; 
+}
+
+.Open:hover {
+    transform: translateY(-5px) scale(1.03); 
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); 
+    z-index: 1;
+}
+
+.text-lg {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 300;
+    font-size: 24px;
+    line-height: 1.2; 
+    letter-spacing: 0%;
+    text-align: center;
+    margin: 0;
+    padding: 10px;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+    max-height: 84px;
+    overflow: hidden;
+    transition: max-height 0.4s ease, background-color 0.3s ease; 
+    flex-grow: 1; 
+}
+
+.text-lg.expanded {
+    max-height: 200px;
+    overflow: visible; 
+    background-color: rgba(240, 240, 240, 0.5); 
+    border-radius: 5px;
+}
+
+.cursorItems {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+    width: calc(100% - 20px); 
+    padding: 10px 0;
+    margin: 0 10px; 
+    border-top: 1px solid #eee; 
+    margin-top: auto;
+}
+
+.left-cursor {
+    display: flex;
+    gap: 15px; 
+}
+
+.right-cursor {
+    display: flex;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out, color 0.2s ease-in-out; 
+}
+
+.icon-hover:hover {
+    transform: scale(1.2);
+    color: rgb(82, 82, 235);
+}
+
+.trash-icon-hover:hover {
+    transform: scale(1.2);
+    color: red;
+}
+
+.no-surveys {
+    grid-column: 1 / -1; 
+    text-align: center;
+    color: #888;
+    padding: 20px;
+}
+
+.modal-card-overlay {
+    position: fixed; 
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 15px; 
+}
+
+.modal-card {
+    background-color: white;
+    padding: 25px 30px; 
+    border-radius: 12px; 
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    max-width: 350px; 
+    width: 100%;
+    text-align: center;
+}
+
+.modal-card h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.4em;
+    color: #333;
+}
+
+.modal-card p {
+    margin-bottom: 25px; 
+    color: #555;
+    line-height: 1.5;
+}
+
+.modal-buttons {
+    margin-top: 20px;
+    display: flex; 
+    justify-content: center; 
+    gap: 15px; 
+}
+
+.modal-buttons button {
+    border: none;
+    padding: 12px 25px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.modal-buttons button:hover {
+    transform: translateY(-2px); 
+}
+
+.confirm-btn {
+    background-color: #e74c3c;
+    color: white;
+}
+.confirm-btn:hover {
+    background-color: #c0392b;
+}
+
+.cancel-btn {
+    background-color: #bdc3c7; 
+    color: #333;
+}
+.cancel-btn:hover {
+    background-color: #95a5a6;
+}
+
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInFast {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes scaleUp {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+.animate-fade-in-fast {
+    animation: fadeInFast 0.3s ease-out forwards;
+}
+
+.animate-scale-up {
+    animation: scaleUp 0.3s ease-out forwards;
+}
+
+@media (max-width: 1200px) {
+    .list-ancet{
+        min-height: 73.4vh; 
+    }
+    .ac-page {
+        max-width: 80%;
+    }
+    .Open-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .list-ancet{
+        min-height: 78vh; 
+    }
+    .ac-page {
+        max-width: 95%;
+        padding: 40px 15px 15px;
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+    .Nick {
+        font-size: 26px;
+        padding: 15px 15px 0px;
+    }
+    .type-qw {
+        font-size: 26px;
+        padding: 30px 15px 15px 15px;
+    }
+    .Open-list {
+        grid-template-columns: 1fr; 
+        margin-left: 15px;
+        margin-right: 15px;
+        gap: 20px;
+    }
+    .Open {
+        max-width: none;
+        min-height: 200px; 
+    }
+    .text-lg {
+        font-size: 20px;
+        max-height: 72px; 
+    }
+    .cursorItems {
+        padding: 8px 0;
+    }
+    .left-cursor {
+        gap: 10px;
+    }
+    .icon-hover, .trash-icon-hover, .settingImg {
+       width: 24px;
+       height: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .list-ancet{
+        min-height: 79vh; 
+    }
+    .ac-page {
+        padding: 30px 10px 10px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+    }
+    .Nick {
+        font-size: 22px;
+        padding: 10px 10px 0px;
+    }
+    .settingImg {
+        width: 24px;
+        height: 24px;
+        margin-left: 8px;
+    }
+    .type-qw {
+        font-size: 22px;
+        padding: 25px 10px 10px 10px;
+    }
+    .Open-list {
+        margin-left: 10px;
+        margin-right: 10px;
+        gap: 15px;
+    }
+    .Open {
+        min-height: 180px;
+        border-radius: 8px;
+    }
+    .text-lg {
+        font-size: 18px;
+        max-height: 65px; 
+        padding: 8px;
+    }
+    .cursorItems {
+        width: calc(100% - 16px); 
+        margin: 0 8px;
+    }
+    .icon-hover, .trash-icon-hover {
+       width: 22px;
+       height: 22px;
+    }
+     .modal-card {
+        padding: 20px;
+    }
+    .modal-card h3 {
+        font-size: 1.2em;
+    }
+    .modal-buttons button {
+        padding: 10px 20px;
+    }
+}

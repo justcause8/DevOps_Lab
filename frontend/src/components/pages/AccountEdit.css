@@ -1,0 +1,162 @@
+.acEdit-page-vh{
+    min-height: 73.3vh;
+}
+.acEdit-page {
+    font-family: Arial, sans-serif;
+    padding: 40px;
+    background-color: #ffffff;
+    max-width: 60%;
+    margin: 60px auto 100px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.loading-state {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+    font-size: 1.2em;
+    color: #555;
+}
+
+.survey-titleLine {
+    padding: 20px;
+    background: rgba(244, 245, 248, 1);
+    border-radius: 10px;
+    font-size: 1.1em;
+    margin: 25px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    flex-wrap: wrap;
+    font-family: 'Rubik', sans-serif;
+    color: #333;
+    font-weight: 400;
+}
+
+.text-line {
+    color: rgba(107, 104, 104, 1);
+    width: auto;
+    flex-grow: 1;
+    font-family: 'Rubik', sans-serif;
+    font-size: 1em;
+    font-weight: 300;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #fff;
+    min-width: 200px;
+    box-sizing: border-box;
+}
+
+.ButtonSaveContainer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 40px;
+    text-align: center;
+}
+
+.ButtonSave {
+    background: rgba(63, 101, 241, 1);
+    border: none;
+    border-radius: 6px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 1em;
+    color: rgba(255, 255, 255, 0.9);
+    width: auto;
+    min-width: 150px;
+    padding: 12px 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.ButtonSave:hover {
+    background-color: #3155c8;
+    transform: translateY(-2px);
+}
+
+.ButtonSave:disabled {
+    background-color: #a0b3f0;
+    cursor: not-allowed;
+    transform: none;
+}
+
+@media (max-width: 1199.98px) {
+    .acEdit-page {
+        max-width: 75%;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .acEdit-page {
+        max-width: 85%;
+        padding: 30px;
+    }
+    .survey-titleLine {
+        font-size: 1em;
+        padding: 15px;
+        gap: 10px;
+    }
+    .text-line {
+        font-size: 0.95em;
+        min-width: 150px;
+    }
+    .ButtonSave {
+        padding: 10px 25px;
+        font-size: 0.95em;
+        min-width: 130px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .acEdit-page-vh{
+        min-height: 75.9vh;
+    }
+    .acEdit-page {
+        max-width: 95%;
+        padding: 20px;
+        margin-top: 40px;
+        margin-bottom: 60px;
+    }
+    .survey-titleLine {
+       margin: 20px 0;
+    }
+    .text-line {
+        width: 100%;
+        margin-top: 5px;
+    }
+    .ButtonSaveContainer {
+        justify-content: center;
+        margin-top: 30px;
+    }
+    .ButtonSave {
+        width: 100%;
+        max-width: 250px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .acEdit-page-vh{
+        min-height: 78.4vh;
+    }
+    .acEdit-page {
+        padding: 15px;
+        margin-top: 30px;
+        margin-bottom: 40px;
+    }
+    .survey-titleLine {
+        padding: 12px;
+        font-size: 0.9em;
+    }
+    .text-line {
+        font-size: 0.9em;
+        padding: 6px 10px;
+    }
+    .ButtonSave {
+        padding: 10px 20px;
+        font-size: 0.9em;
+    }
+}

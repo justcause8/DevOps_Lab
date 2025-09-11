@@ -1,0 +1,48 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh; 
+	
+}
+
+
+#root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; 
+}
+
+.page-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1; 
+}
+
+.content {
+    flex: 1;
+    padding: 20px; 
+}
+
+
+
+.footer {
+    background-color: #93aafc;
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+    flex-shrink: 0;
+    min-height: 10vh;
+}
+.footer__wrapper {
+    padding: 0 15px;
+}
+
+.copyright p {
+    margin: 0;
+}
+
+@media (max-width: 850px) {
+    .footer {
+        padding: 20px 0 30px;
+    }
+}
