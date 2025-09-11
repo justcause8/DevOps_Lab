@@ -38,6 +38,7 @@ function AnswersPage() {
                 //     headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` },
                 // });
 
+                
                 const { title, questions: fetchedQuestions, author: fetchedAuthor } = response.data;
                 if (!fetchedQuestions || !Array.isArray(fetchedQuestions)) {
                     console.error('Данные вопросов отсутствуют или имеют неверный формат:', response.data);
