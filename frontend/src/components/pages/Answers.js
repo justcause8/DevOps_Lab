@@ -26,6 +26,7 @@ function AnswersPage() {
             setApiError('');
             setValidationErrors({});
             try {
+                
                 // const response = await axios.get(`https://localhost:7109/questionnaire/access/${id}`, {
                 //     headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` },
                 // });
