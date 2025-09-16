@@ -40,7 +40,7 @@ pipeline {
                         stage('Test Backend') {
                             dir('backend') {
                                 echo 'Запускаем тесты бэкенда...'
-                                // bat 'dotnet test'
+                                bat 'dotnet test'
                             }
                         }
                     }
@@ -53,13 +53,13 @@ pipeline {
         }
 
         stage('Deploy (CD)') {
-            // when {
-            //     expression { env.GIT_BRANCH?.contains('master') }
-            // }
-
             when {
-                branch 'master'
+                expression { env.GIT_BRANCH?.contains('master') }
             }
+
+            // when {
+            //     branch 'master'
+            // }
 
             steps {
                 script {
