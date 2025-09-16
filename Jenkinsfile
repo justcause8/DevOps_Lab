@@ -53,9 +53,14 @@ pipeline {
         }
 
         stage('Deploy (CD)') {
+            // when {
+            //     expression { env.GIT_BRANCH?.contains('master') }
+            // }
+
             when {
-                expression { env.GIT_BRANCH?.contains('master') }
+                branch 'master'
             }
+
             steps {
                 script {
                     def frontendChanged = env.CHANGED_FRONTEND.toBoolean()
