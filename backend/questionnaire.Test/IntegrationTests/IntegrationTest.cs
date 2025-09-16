@@ -75,7 +75,7 @@ namespace questionnaire.Test.IntegrationTests
             Assert.NotNull(updatedUser);
             Assert.Equal("new_nick", updatedUser.Username);
             Assert.Equal("new@example.com", updatedUser.Email);
-            Assert.NotEqual("hashed_old_password", updatedUser.PasswordHash); // пароль изменился
+            Assert.NotEqual("hashed_old_password", updatedUser.PasswordHash);
         }
 
         [Fact]
