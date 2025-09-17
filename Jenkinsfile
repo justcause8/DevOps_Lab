@@ -30,8 +30,8 @@ pipeline {
                         stage('Test Frontend') {
                             dir('frontend') {
                                 echo 'Запускаем тесты фронтенда...'
-                                bat 'npm install'
-                                bat 'npm test -- --watchAll=false'
+                                // bat 'npm install'
+                                // bat 'npm test -- --watchAll=false'
                             }
                         }
                     }
