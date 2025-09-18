@@ -75,7 +75,7 @@ pipeline {
                     if (backendChanged) {
                         echo 'Бэкенд: все тесты пройдены — готов к доставке.'
                         // Здесь можно добавить команды деплоя бэкенда, например:
-                        // bat 'dotnet publish -c Release -o ./publish'
+                        bat 'dotnet publish -c Release -o ./publish'
                     }
 
                     if (!frontendChanged && !backendChanged) {
