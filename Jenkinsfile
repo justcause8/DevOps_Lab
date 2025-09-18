@@ -69,7 +69,7 @@ pipeline {
                     if (frontendChanged) {
                         echo 'Фронтенд: все тесты пройдены — готов к доставке.'
                         // Здесь можно добавить команды деплоя фронтенда, например:
-                        // bat 'npm run build && some-deploy-command'
+                        bat 'npm run build && some-deploy-command'
                     }
 
                     if (backendChanged) {
