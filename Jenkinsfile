@@ -30,7 +30,7 @@ pipeline {
                         stage('Test Frontend') {
                             dir('frontend') {
                                 echo 'Запускаем тесты фронтенда...'
-                                // bat 'npm install'
+                                bat 'npm install'
                                 // bat 'npm test -- --watchAll=false'
                             }
                         }
@@ -69,13 +69,13 @@ pipeline {
                     if (frontendChanged) {
                         echo 'Фронтенд: все тесты пройдены — готов к доставке.'
                         // Здесь можно добавить команды деплоя фронтенда, например:
-                        // bat 'npm run build && some-deploy-command'
+                        bat 'npm run build && some-deploy-command'
                     }
 
                     if (backendChanged) {
                         echo 'Бэкенд: все тесты пройдены — готов к доставке.'
                         // Здесь можно добавить команды деплоя бэкенда, например:
-                        // bat 'dotnet publish -c Release -o ./publish'
+                        bat 'dotnet publish -c Release -o ./publish'
                     }
 
                     if (!frontendChanged && !backendChanged) {
