@@ -2,26 +2,26 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-                script {
-                    // Получаем список изменённых файлов между последним коммитом и предыдущим
-                    def changes = bat(script: 'git diff --name-only HEAD~1 HEAD', returnStdout: true).trim()
-                    echo "Изменённые файлы:\n${changes}"
+        // stage('Checkout') {
+        //     steps {
+        //         checkout scm
+        //         script {
+        //             // Получаем список изменённых файлов между последним коммитом и предыдущим
+        //             def changes = bat(script: 'git diff --name-only HEAD~1 HEAD', returnStdout: true).trim()
+        //             echo "Изменённые файлы:\n${changes}"
 
-                    // Проверяем, были ли изменения в frontend/ или backend/
-                    def changedFrontend = changes.contains('frontend/')
-                    def changedBackend = changes.contains('backend/')
+        //             // Проверяем, были ли изменения в frontend/ или backend/
+        //             def changedFrontend = changes.contains('frontend/')
+        //             def changedBackend = changes.contains('backend/')
 
-                    env.CHANGED_FRONTEND = changedFrontend.toString()
-                    env.CHANGED_BACKEND = changedBackend.toString()
+        //             env.CHANGED_FRONTEND = changedFrontend.toString()
+        //             env.CHANGED_BACKEND = changedBackend.toString()
 
-                    echo "Frontend изменен: ${changedFrontend}"
-                    echo "Backend изменен: ${changedBackend}"
-                }
-            }
-        }
+        //             echo "Frontend изменен: ${changedFrontend}"
+        //             echo "Backend изменен: ${changedBackend}"
+        //         }
+        //     }
+        // }
 
         stages {
         stage('Test') {
