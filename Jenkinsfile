@@ -53,9 +53,9 @@ pipeline {
             }
         }
 
-        stage('Merge fix to dev') {
+        stage('Merge fix/my-fix to dev') {
             when {
-                expression { env.GIT_BRANCH?.contains('fix') }
+                expression { env.GIT_BRANCH?.contains('fix/my-fix') }
             }
             steps {
                 script {
