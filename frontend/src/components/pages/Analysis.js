@@ -8,7 +8,6 @@ import {
     Tooltip,
     Legend,
 } from 'chart.js';
-
 import { Bar, Doughnut } from 'react-chartjs-2';
 import React, { useEffect, useState, useMemo, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
