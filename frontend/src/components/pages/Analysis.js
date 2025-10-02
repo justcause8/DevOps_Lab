@@ -69,6 +69,7 @@ function ScoreWheel({ score, size = 60, strokeWidth = 5 }) {
 
     let strokeColor = '#cccccc';
     
+    
     const currentProgress = (circumference - currentDashOffset) / circumference;
     if (currentProgress > 0.01) {
         const hue = currentProgress * 120;
