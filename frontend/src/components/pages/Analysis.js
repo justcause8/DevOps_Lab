@@ -8,6 +8,7 @@ import {
     Tooltip,
     Legend,
 } from 'chart.js';
+
 import { Bar, Doughnut } from 'react-chartjs-2';
 import React, { useEffect, useState, useMemo, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
@@ -68,6 +69,7 @@ function ScoreWheel({ score, size = 60, strokeWidth = 5 }) {
     }, [score, circumference]);
 
     let strokeColor = '#cccccc';
+    
     
     const currentProgress = (circumference - currentDashOffset) / circumference;
     if (currentProgress > 0.01) {
