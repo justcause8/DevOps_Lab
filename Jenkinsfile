@@ -41,11 +41,8 @@ pipeline {
             steps {
                 dir(env.FRONTEND_DIR) {
                     echo 'Устанавливаем зависимости...'
-                    // Проверяем наличие package-lock.json
                     bat 'if not exist "package-lock.json" (exit 1) else (echo "package-lock.json найден")'
-                    // Используем npm ci для воспроизводимой установки
                     bat 'npm ci'
-                    // bat 'npm install'
                 }
             }
         }
@@ -87,7 +84,7 @@ pipeline {
 
         stage('Deploy to Production (CD)') {
             when {
-                expression { env.GIT_BRANCH == 'master' }
+                expression { env.GIT_BRANCH == 'origin/master' }
             }
             steps {
                 script {
