@@ -7,18 +7,23 @@ pipeline {
     }
 
     stages {
+        stage('Debug Branch Info') {
+            steps {
+                script {
+                    echo "GIT_BRANCH: '${env.GIT_BRANCH}'"
+                }
+            }
+        }
+
         stage('Checkout') {
             steps {
                 checkout scm
                 script {
-                    // Определяем, является ли ветка fix-веткой
-                    def isFixBranch = (env.GIT_BRANCH != null && env.GIT_BRANCH.startsWith('origin/fix/'))
-                    env.IS_FIX_BRANCH = isFixBranch.toString()
-
-                    // Получаем список изменённых файлов
+                    // Получаем список изменённых файлов между последними коммитами
                     def changes = bat(script: 'git diff --name-only HEAD~1 HEAD', returnStdout: true).trim()
                     echo "Изменённые файлы:\n${changes}"
 
+                    // Определяем, были ли изменения в frontend/ или backend/
                     def changedFrontend = changes.contains("${env.FRONTEND_DIR}/")
                     def changedBackend  = changes.contains("${env.BACKEND_DIR}/")
 
@@ -27,28 +32,40 @@ pipeline {
 
                     echo "Frontend изменён: ${env.CHANGED_FRONTEND}"
                     echo "Backend изменён:  ${env.CHANGED_BACKEND}"
-                    echo "Ветка fix/*:       ${env.IS_FIX_BRANCH}"
                 }
             }
         }
 
-        stage('Run Tests') {
+        stage('Install Dependencies') {
+            steps {
+                dir(env.FRONTEND_DIR) {
+                    echo 'Устанавливаем зависимости...'
+                    // Проверяем наличие package-lock.json
+                    bat 'if not exist "package-lock.json" (exit 1) else (echo "package-lock.json найден")'
+                    // Используем npm ci для воспроизводимой установки
+                    bat 'npm ci'
+                    // bat 'npm install'
+                }
+            }
+        }
+
+        sstage('Run Tests') {
             when {
                 anyOf {
-                    expression { env.IS_FIX_BRANCH.toBoolean() }
-                    expression { env.CHANGED_FRONTEND.toBoolean() }
-                    expression { env.CHANGED_BACKEND.toBoolean() }
+                    changeRequest()
+                    expression { env.GIT_BRANCH == 'origin/dev' }
+                    expression { env.GIT_BRANCH == 'origin/master' }
+                    expression { env.GIT_BRANCH?.startsWith('origin/fix/') }
                 }
             }
             steps {
                 script {
-                    boolean runFrontend = env.IS_FIX_BRANCH.toBoolean() || env.CHANGED_FRONTEND.toBoolean()
-                    boolean runBackend  = env.IS_FIX_BRANCH.toBoolean() || env.CHANGED_BACKEND.toBoolean()
+                    boolean runFrontend = env.CHANGED_FRONTEND.toBoolean()
+                    boolean runBackend  = env.CHANGED_BACKEND.toBoolean()
 
                     if (runFrontend) {
                         dir(env.FRONTEND_DIR) {
                             echo 'Запускаем тесты фронтенда...'
-                            // bat 'npm ci'
                             // bat 'npm test -- --watchAll=false'
                         }
                     }
@@ -61,7 +78,7 @@ pipeline {
                     }
 
                     if (!runFrontend && !runBackend) {
-                        echo 'Нет причин запускать тесты (не должно произойти из-за условия when).'
+                        echo 'Нет изменений в frontend/ или backend/ — тесты пропущены.'
                     }
                 }
             }
@@ -69,14 +86,11 @@ pipeline {
 
         stage('Deploy to Production (CD)') {
             when {
-                expression { 
-                    env.GIT_BRANCH != null && 
-                    env.GIT_BRANCH == 'origin/master' 
-                }
+                expression { env.GIT_BRANCH == 'origin/master' }
             }
             steps {
                 script {
-                    echo "Запускаем полный деплой для ветки master"
+                    echo "Запускаем деплой"
 
                     // Frontend
                     dir(env.FRONTEND_DIR) {
@@ -91,7 +105,7 @@ pipeline {
                         // bat 'dotnet publish -c Release -o ./publish'
                     }
 
-                    echo 'Деплой завершён. Артефакты готовы к развёртыванию на сервере.'
+                    echo 'Деплой завершён.'
                 }
             }
         }
