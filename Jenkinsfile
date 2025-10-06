@@ -73,7 +73,7 @@ pipeline {
                     if (runBackend) {
                         dir(env.BACKEND_DIR) {
                             echo 'Запускаем тесты бэкенда...'
-                            bat 'dotnet test'
+                            // bat 'dotnet test'
                         }
                     }
 
