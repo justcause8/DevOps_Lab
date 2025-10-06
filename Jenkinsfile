@@ -87,7 +87,7 @@ pipeline {
 
         stage('Deploy to Production (CD)') {
             when {
-                expression { env.GIT_BRANCH == 'origin/master' }
+                expression { env.GIT_BRANCH == 'master' }
             }
             steps {
                 script {
