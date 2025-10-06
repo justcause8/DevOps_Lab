@@ -97,7 +97,7 @@ pipeline {
                     dir(env.FRONTEND_DIR) {
                         echo 'Устанавливаем зависимости и собираем фронтенд...'
                         bat 'npm ci'
-                        bat 'set CI=false && npm run build'
+                        bat 'npm run build'
                     }
 
                     // Backend
