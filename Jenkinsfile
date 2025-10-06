@@ -24,7 +24,7 @@ pipeline {
                     echo "Изменённые файлы:\n${changes}"
 
                     // Определяем, были ли изменения в frontend/ или backend/
-                    
+
                     def changedFrontend = changes.contains("${env.FRONTEND_DIR}/")
                     def changedBackend  = changes.contains("${env.BACKEND_DIR}/")
 
@@ -74,7 +74,7 @@ pipeline {
                     if (runBackend) {
                         dir(env.BACKEND_DIR) {
                             echo 'Запускаем тесты бэкенда...'
-                            // bat 'dotnet test'
+                            bat 'dotnet test'
                         }
                     }
 
