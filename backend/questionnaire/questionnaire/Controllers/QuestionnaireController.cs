@@ -110,7 +110,6 @@ namespace questionnaire.questionnaire.Controllers
                 }
             });
         }
-
         
         // Отображение списка анкет
         [HttpGet("questionnaires")]
