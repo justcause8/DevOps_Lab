@@ -21,7 +21,6 @@ namespace questionnaire.questionnaire.Controllers
             _context = context;
         }
 
-
         // Получение данных текущего пользователя
         [HttpGet("current")]
         [Authorize]
@@ -111,7 +110,6 @@ namespace questionnaire.questionnaire.Controllers
                 }
             });
         }
-
         
         // Отображение списка анкет
         [HttpGet("questionnaires")]

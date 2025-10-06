@@ -1,86 +1,113 @@
 pipeline {
     agent any
 
+    environment {
+        FRONTEND_DIR = 'frontend'
+        BACKEND_DIR  = 'backend'
+    }
+
     stages {
-        stage('Checkout') {
+        stage('Debug Branch Info') {
             steps {
-                checkout scm
                 script {
-                    // Получаем список изменённых файлов между последним коммитом и предыдущим
-                    def changes = bat(script: 'git diff --name-only HEAD~1 HEAD', returnStdout: true).trim()
-                    echo "Изменённые файлы:\n${changes}"
-
-                    // Проверяем, были ли изменения в frontend/ или backend/
-                    def changedFrontend = changes.contains('frontend/')
-                    def changedBackend = changes.contains('backend/')
-
-                    env.CHANGED_FRONTEND = changedFrontend.toString()
-                    env.CHANGED_BACKEND = changedBackend.toString()
-
-                    echo "Frontend изменен: ${changedFrontend}"
-                    echo "Backend изменен: ${changedBackend}"
+                    echo "GIT_BRANCH: '${env.GIT_BRANCH}'"
                 }
             }
         }
 
-        stage('Test') {
+        stage('Checkout') {
+            steps {
+                checkout scm
+                script {
+                    // Получаем список изменённых файлов между последними коммитами
+                    def changes = bat(script: 'git diff --name-only HEAD~1 HEAD', returnStdout: true).trim()
+                    echo "Изменённые файлы:\n${changes}"
+
+                    // Определяем, были ли изменения в frontend/ или backend/
+
+                    def changedFrontend = changes.contains("${env.FRONTEND_DIR}/")
+                    def changedBackend  = changes.contains("${env.BACKEND_DIR}/")
+
+                    env.CHANGED_FRONTEND = changedFrontend.toString()
+                    env.CHANGED_BACKEND  = changedBackend.toString()
+
+                    echo "Frontend изменён: ${env.CHANGED_FRONTEND}"
+                    echo "Backend изменён:  ${env.CHANGED_BACKEND}"
+                }
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                dir(env.FRONTEND_DIR) {
+                    echo 'Устанавливаем зависимости...'
+                    // Проверяем наличие package-lock.json
+                    bat 'if not exist "package-lock.json" (exit 1) else (echo "package-lock.json найден")'
+                    // Используем npm ci для воспроизводимой установки
+                    bat 'npm ci'
+                    // bat 'npm install'
+                }
+            }
+        }
+
+        stage('Run Tests') {
+            when {
+                anyOf {
+                    changeRequest()
+                    expression { env.GIT_BRANCH == 'origin/dev' }
+                    expression { env.GIT_BRANCH == 'origin/master' }
+                    expression { env.GIT_BRANCH?.startsWith('origin/fix/') }
+                }
+            }
             steps {
                 script {
-                    if (env.CHANGED_FRONTEND.toBoolean()) {
-                        stage('Test Frontend') {
-                            dir('frontend') {
-                                echo 'Запускаем тесты фронтенда...'
-                                bat 'npm install'
-                                // bat 'npm test -- --watchAll=false'
-                            }
+                    boolean runFrontend = env.CHANGED_FRONTEND.toBoolean()
+                    boolean runBackend  = env.CHANGED_BACKEND.toBoolean()
+
+                    if (runFrontend) {
+                        dir(env.FRONTEND_DIR) {
+                            echo 'Запускаем тесты фронтенда...'
+                            // bat 'npm test -- --watchAll=false'
                         }
                     }
 
-                    if (env.CHANGED_BACKEND.toBoolean()) {
-                        stage('Test Backend') {
-                            dir('backend') {
-                                echo 'Запускаем тесты бэкенда...'
-                                bat 'dotnet test'
-                            }
+                    if (runBackend) {
+                        dir(env.BACKEND_DIR) {
+                            echo 'Запускаем тесты бэкенда...'
+                            bat 'dotnet test'
                         }
                     }
 
-                    if (!env.CHANGED_FRONTEND.toBoolean() && !env.CHANGED_BACKEND.toBoolean()) {
+                    if (!runFrontend && !runBackend) {
                         echo 'Нет изменений в frontend/ или backend/ — тесты пропущены.'
                     }
                 }
             }
         }
 
-        stage('Deploy (CD)') {
+        stage('Deploy to Production (CD)') {
             when {
-                expression { env.GIT_BRANCH?.contains('master') }
+                expression { env.GIT_BRANCH == 'origin/master' }
             }
-
-            // when {
-            //     branch 'master'
-            // }
-
             steps {
                 script {
-                    def frontendChanged = env.CHANGED_FRONTEND.toBoolean()
-                    def backendChanged = env.CHANGED_BACKEND.toBoolean()
+                    echo "Запускаем деплой"
 
-                    if (frontendChanged) {
-                        echo 'Фронтенд: все тесты пройдены — готов к доставке.'
-                        // Здесь можно добавить команды деплоя фронтенда, например:
-                        bat 'npm run build && some-deploy-command'
+                    // Frontend
+                    dir(env.FRONTEND_DIR) {
+                        echo 'Устанавливаем зависимости и собираем фронтенд...'
+                        bat 'npm ci'
+                        bat 'npm run build'
                     }
 
-                    if (backendChanged) {
-                        echo 'Бэкенд: все тесты пройдены — готов к доставке.'
-                        // Здесь можно добавить команды деплоя бэкенда, например:
+                    // Backend
+                    dir(env.BACKEND_DIR) {
+                        echo 'Восстанавливаем зависимости и публикуем бэкенд...'
+                        bat 'dotnet restore'
                         bat 'dotnet publish -c Release -o ./publish'
                     }
 
-                    if (!frontendChanged && !backendChanged) {
-                        echo 'Нет изменений для доставки.'
-                    }
+                    echo 'Деплой завершён.'
                 }
             }
         }
@@ -93,112 +120,8 @@ pipeline {
         failure {
             echo 'Пайплайн завершился с ошибкой!'
         }
+        always {
+            cleanWs()
+        }
     }
 }
-
-
-
-
-
-
-
-
-// pipeline {
-//     agent any
-
-//     environment {
-//         CHANGED_FILES = ''
-//     }
-
-//     stages{
-//         stage('Checkout') {
-//             steps {
-//                 checkout scm
-//                 script {
-//                     def changedFiles = ''
-
-//                     try {
-//                         changedFiles = bat (
-//                             script: 'git diff --name-only HEAD~1 HEAD',
-//                             returnStdout: true
-//                         ).trim()
-//                     } catch (Exception e) {
-//                         changedFiles = ''
-//                     }
-                    
-//                     env.CHANGED_FILES = changedFiles ?: ''
-//                     echo "Измененные файлы: ${env.CHANGED_FILES}"
-//                 }
-//             }
-//         }
-
-//         stage('Test') {
-//             when {
-//                 branch 'dev'
-//             }
-
-//             steps {
-//                 script {
-//                     def changes = env.CHANGED_FILES ?: ''
-//                     def changedFrontend = changes.contains('frontend/')
-//                     def changedBackend = changes.contains('backend/')
-
-//                     echo "Frontend изменен: ${changedFrontend}"
-//                     echo "Backend изменен: ${changedBackend}"
-
-//                     if (changedFrontend) {
-//                         stage('Test Frontend') {
-//                             dir('frontend') {
-//                                 echo 'Запускаем тесты фронтенда...'
-//                                 bat 'npm test -- --watchAll=false'
-//                             }
-//                         }
-//                     }
-
-//                     if (changedBackend) {
-//                         stage('Test Backend') {
-//                             dir('backend') {
-//                                 echo 'Запускаем тесты бэкенда...'
-//                                 bat 'dotnet test'
-//                             }
-//                         }
-//                     }
-
-//                     if (!changedFrontend && !changedBackend) {
-//                         echo "Нет изменений в frontend/ или backend/ — пропускаем тестирование."
-//                     }
-//                 }
-//             }
-//         }
-
-//         stage ('Deploy (CD)') {
-//             when {
-//                 branch 'master'
-//             }
-
-//             steps {
-//                 echo 'Тестирование пройдено — код готов к доставке!'
-//                 script {
-//                     if (env.CHANGED_FILES.contains('backend/')) {
-//                         echo 'Бэкенд: все тесты пройдены.'
-//                     }
-//                     if (env.CHANGED_FILES.contains('frontend/')) {
-//                         echo 'Фронтенд: все тесты пройдены.'
-//                     }
-//                     if (!env.CHANGED_FILES.contains('frontend/') && !env.CHANGED_FILES.contains('backend/')) {
-//                         echo 'Нет изменений для доставки.'
-//                     }
-//                 }
-//             }
-//         }
-//     }
-
-//     // post {
-//     //     success {
-//     //         echo 'Все тесты успешно пройдены!'
-//     //     }
-//     //     failure {
-//     //         echo 'Произошла ошибка.'
-//     //     }
-//     // }
-// }

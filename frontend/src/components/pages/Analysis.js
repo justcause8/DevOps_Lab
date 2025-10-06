@@ -51,7 +51,6 @@ const generateCheckboxBarLegendLabels = (chart) => {
     return [];
 };
 
-
 function ScoreWheel({ score, size = 60, strokeWidth = 5 }) {
     const radius = (size - strokeWidth) / 2;
     const circumference = 2 * Math.PI * radius;
@@ -68,6 +67,7 @@ function ScoreWheel({ score, size = 60, strokeWidth = 5 }) {
     }, [score, circumference]);
 
     let strokeColor = '#cccccc';
+    
     
     const currentProgress = (circumference - currentDashOffset) / circumference;
     if (currentProgress > 0.01) {
