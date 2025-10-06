@@ -24,6 +24,7 @@ pipeline {
                     echo "Изменённые файлы:\n${changes}"
 
                     // Определяем, были ли изменения в frontend/ или backend/
+                    
                     def changedFrontend = changes.contains("${env.FRONTEND_DIR}/")
                     def changedBackend  = changes.contains("${env.BACKEND_DIR}/")
 
