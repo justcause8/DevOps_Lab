@@ -115,7 +115,7 @@ namespace questionnaire.Test.IntegrationTests
             var createResponse = JObject.Parse(createJson);
             var questionnaireId = (int)createResponse["questionnaireId"];
             var link = (string)createResponse["link"];
-            var accessLinkToken = link.Split('/').Last(); // извлекаем токен из ссылки
+            var accessLinkToken = link.Split('/').Last();
 
             // Получаем анкету по токену (как респондент)
             var getForRespondentResult = await qController.GetQuestionnaireForRespondent(accessLinkToken);
