@@ -95,15 +95,16 @@ pipeline {
 
                     // Frontend
                     dir(env.FRONTEND_DIR) {
-                        echo 'Собираем фронтенд...'
-                        // bat 'npm ci'
-                        // bat 'npm run build'
+                        echo 'Устанавливаем зависимости и собираем фронтенд...'
+                        bat 'npm ci'
+                        bat 'npm run build'
                     }
 
                     // Backend
                     dir(env.BACKEND_DIR) {
-                        echo 'Публикуем бэкенд...'
-                        // bat 'dotnet publish -c Release -o ./publish'
+                        echo 'Восстанавливаем зависимости и публикуем бэкенд...'
+                        bat 'dotnet restore'
+                        bat 'dotnet publish -c Release -o ./publish'
                     }
 
                     echo 'Деплой завершён.'
