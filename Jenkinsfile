@@ -49,7 +49,7 @@ pipeline {
             }
         }
 
-        sstage('Run Tests') {
+        stage('Run Tests') {
             when {
                 anyOf {
                     changeRequest()
